@@ -44,3 +44,10 @@
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
   }
+
+
+  /*PRE LOADER*/
+svg path,
+svg rect{
+  fill: black;
+}
