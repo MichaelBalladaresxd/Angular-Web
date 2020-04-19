@@ -32,7 +32,6 @@ export class InfoPaginaService {
     //Leer archivos JSON
     this.http.get('https://angular-html-568e3.firebaseio.com/equipo.json')
     .subscribe((resp: any[]) => {
-      console.log(resp)
       this.equipo = resp;
       
     })

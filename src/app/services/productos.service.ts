@@ -7,6 +7,7 @@ import { ProductosInterface } from '../interface/productos.interface';
 export class ProductosService {
   cargando = true;
   productos : ProductosInterface[] = [];
+  productosFiltrado: ProductosInterface[] = [];
 
   constructor(private http:HttpClient) { 
     this.cargarProductos();
@@ -15,7 +16,6 @@ export class ProductosService {
   private cargarProductos(){
     this.http.get('https://angular-html-568e3.firebaseio.com/productos_idx.json').
     subscribe((resp: ProductosInterface[])=>{
-      console.log(resp);
       this.productos = resp;
       this.cargando = false;
     })
@@ -24,5 +24,13 @@ export class ProductosService {
 
   getProducto(id: string){
    return this.http.get(`https://angular-html-568e3.firebaseio.com/productos/${id}.json`);
+  }
+
+  buscarProducto(termino : string){
+   this.productosFiltrado = this.productos.filter(producto =>{
+      return true;
+    });
+
+    console.log( this.productosFiltrado);
   }
 }
