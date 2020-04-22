@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductosInterface } from '../interface/productos.interface';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +15,13 @@ export class ProductosService {
   }
 
   private cargarProductos(){
-    this.http.get('https://angular-html-568e3.firebaseio.com/productos_idx.json').
-    subscribe((resp: ProductosInterface[])=>{
-      this.productos = resp;
-      this.cargando = false;
+    return new Promise(( resolve , reject)=>{
+      this.http.get('https://angular-html-568e3.firebaseio.com/productos_idx.json').
+      subscribe((resp: ProductosInterface[])=>{
+        this.productos = resp;
+        this.cargando = false;
+        resolve();
+      });
     })
   }
 
@@ -27,10 +31,27 @@ export class ProductosService {
   }
 
   buscarProducto(termino : string){
-   this.productosFiltrado = this.productos.filter(producto =>{
-      return true;
-    });
 
-    console.log( this.productosFiltrado);
+    if (this.productos.length === 0) {
+      //cargar productos 
+      this.cargarProductos().then(()=>{
+        this.filtrarProductos(termino);
+      })
+
+    } else {
+      this.filtrarProductos(termino);
+    }
+  
+  }
+
+
+  private filtrarProductos(termino:string){
+    console.log(this.productos);
+    this.productosFiltrado = [];
+    this.productos.forEach(prod => {
+      if (prod.categoria.indexOf( termino ) >=0 || prod.titulo.indexOf(termino)) {
+        this.productosFiltrado.push(prod);
+      }
+    })
   }
 }

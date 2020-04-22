@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
 export class HeaderComponent implements OnInit {
 
   constructor(public _servicioIngoPagina : InfoPaginaService, private router: Router) { }
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
   buscarProducto( termino: string ){
 
     if (termino.length < 1) {
@@ -21,6 +23,6 @@ export class HeaderComponent implements OnInit {
     }
 
     this.router.navigate(['/search', termino] );
-    console.log(termino)
+    console.log(termino)  
   }
 }
